@@ -1,0 +1,17 @@
+# Python 缓存与字节码
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# 运行时数据（由脚本再生，不入库）
+agent-system/data/audit.jsonl
+agent-system/data/confirmations.json
+agent-system/data/*.log
+agent-system/kb/*.tmp
+
+# 编辑器 / 系统
+.idea/
+.vscode/
+*.swp
+.DS_Store
