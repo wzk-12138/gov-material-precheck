@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>云州市便民服务中心 · 办事材料预检与服务协同 · 现状流程图</title>
+<style>
+:root{
+  --paper:#fbfaf4; --card:#ffffff; --ink:#23372f; --muted:#6d7d72;
+  --line:#d9e0d4; --green:#2d654f; --green2:#e9f2ea; --green3:#cfe2d3;
+  --red:#b3473b; --red2:#fbece9; --red3:#e9b9b2;
+  --amber:#a9702a; --amber2:#fdf3e3; --amber3:#e8cfa5;
+  --blue:#3a6b8a; --blue2:#eaf2f7; --blue3:#c8dce9;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font:15px/1.75 "Microsoft YaHei","PingFang SC","Hiragino Sans GB",system-ui,sans-serif;}
+.wrap{max-width:1460px;margin:0 auto;padding:34px 30px 60px}
+header.top{border-bottom:3px solid var(--green);padding-bottom:22px;margin-bottom:26px}
+.kicker{font-size:12px;letter-spacing:.22em;color:var(--green);font-weight:700}
+h1{font-size:30px;margin:8px 0 6px;letter-spacing:.02em;line-height:1.35}
+.sub{color:var(--muted);font-size:14px;margin:0}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.chip{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 13px;font-size:13px}
+.chip b{color:var(--green);font-size:16px}
+.chip.warn b{color:var(--red)}
+.notice{margin-top:16px;background:var(--green2);border-left:4px solid var(--green);
+  padding:11px 16px;font-size:13.5px;border-radius:0 6px 6px 0}
+h2{font-size:20px;margin:38px 0 4px;padding-left:12px;border-left:5px solid var(--green)}
+.h2note{color:var(--muted);font-size:13px;margin:0 0 16px 12px}
+.legend{display:flex;flex-wrap:wrap;gap:16px;font-size:12.5px;color:var(--muted);margin:0 0 12px}
+.legend i{display:inline-block;width:22px;height:0;border-top:2px solid var(--green);
+  vertical-align:middle;margin-right:6px}
+.legend i.dash{border-top-style:dashed;border-color:var(--amber)}
+.legend i.back{border-top-style:dashed;border-color:var(--red)}
+.figbox{background:var(--card);border:1px solid var(--line);border-radius:10px;
+  padding:8px;overflow-x:auto;box-shadow:0 2px 14px rgba(35,55,47,.05)}
+svg.map{display:block;width:100%;min-width:1180px;height:auto}
+svg text{font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif}
+.band{fill:#f4f7f0}
+.band.alt{fill:#fbfcf8}
+.axis{fill:#2d654f}
+.lane{fill:#eef4ec;stroke:#d9e0d4}
+.lane2{fill:#ffffff}
+.axis-t{fill:#ffffff;font-size:14px;font-weight:700}
+.axis-s{fill:#cfe2d3;font-size:11px}
+.lane-t{fill:#23372f;font-size:13.5px;font-weight:700}
+.lane-s{fill:#6d7d72;font-size:11px}
+.n{fill:#ffffff;stroke:#c9d8cb;stroke-width:1.2}
+.n.back{fill:#fbece9;stroke:#e9b9b2}
+.n.judge{fill:#fdf3e3;stroke:#e8cfa5}
+.n.sys{fill:#eaf2f7;stroke:#c8dce9}
+.n.sponsor{fill:#f1f7f1;stroke:#c9d8cb}
+.num{fill:#2d654f}
+.num.back{fill:#b3473b}
+.t{font-size:12.5px;font-weight:700;fill:#23372f}
+.s{font-size:10.5px;fill:#6d7d72}
+.ev{font-size:9.5px;fill:#8b9c90}
+.flow{fill:none;stroke:#2d654f;stroke-width:1.8;marker-end:url(#ar)}
+.flow.dash{stroke:#a9702a;stroke-dasharray:5 4;marker-end:url(#aram)}
+.flow.back{stroke:#b3473b;stroke-dasharray:5 4;marker-end:url(#arred)}
+.flow.soft{stroke:#6f8a79;stroke-dasharray:4 4;marker-end:url(#arsoft)}
+.cap-j{fill:#a9702a;font-size:10.5px;font-weight:700}
+.cap-r{fill:#b3473b;font-size:10.5px;font-weight:700}
+.pill-j{fill:#fdf3e3;stroke:#e8cfa5}
+.pill-r{fill:#fbece9;stroke:#e9b9b2}
+.tag{fill:#2d654f;font-size:10px}
+table{border-collapse:collapse;width:100%;background:var(--card);font-size:13px;
+  border:1px solid var(--line);border-radius:8px;overflow:hidden}
+th,td{border-bottom:1px solid var(--line);border-right:1px solid var(--line);
+  padding:9px 11px;text-align:left;vertical-align:top;line-height:1.6}
+th{background:#eef4ec;color:var(--green);font-weight:700;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+td:last-child,th:last-child{border-right:none}
+td.e{color:var(--muted);font-size:11.5px;white-space:nowrap}
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:9px;padding:16px 18px;
+  border-top:4px solid var(--red)}
+.card h3{margin:0 0 4px;font-size:15.5px;color:var(--red)}
+.card .trigger{font-size:12px;color:var(--muted);margin:0 0 10px}
+.card dl{margin:0;font-size:12.8px}
+.card dt{color:var(--green);font-weight:700;margin-top:7px;font-size:12px}
+.card dd{margin:1px 0 0}
+.card .foot{margin-top:11px;padding-top:9px;border-top:1px dashed var(--line);
+  font-size:11.5px;color:var(--muted)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:9px;padding:16px 18px}
+.box h3{margin:0 0 10px;font-size:15px;color:var(--green)}
+.box ul{margin:0;padding-left:19px;font-size:13px}
+.box li{margin-bottom:7px}
+.box .evtag{color:var(--muted);font-size:11px}
+.loop{background:var(--red2);border:1px dashed var(--red3);border-radius:9px;
+  padding:14px 18px;margin-top:14px;font-size:13.5px}
+.loop b{color:var(--red)}
+.loop .seq{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:9px;font-size:12.5px}
+.loop .seq span{background:#fff;border:1px solid var(--red3);border-radius:20px;padding:4px 11px}
+.loop .seq i{color:var(--red);font-style:normal;font-weight:700}
+.sysbar{background:var(--blue2);border:1px solid var(--blue3);border-radius:9px;
+  padding:14px 18px;margin-top:14px;font-size:13px}
+.sysbar b{color:var(--blue)}
+.sysbar ul{margin:8px 0 0;padding-left:19px}
+.sysbar li{margin-bottom:5px}
+.footnote{margin-top:36px;border-top:1px solid var(--line);padding-top:16px;
+  font-size:12px;color:var(--muted)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+.mini{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px 14px;font-size:12.5px}
+.mini b{display:block;color:var(--green);font-size:13px;margin-bottom:5px}
+.btn{position:fixed;right:26px;bottom:26px;background:var(--green);color:#fff;border:none;
+  border-radius:24px;padding:11px 20px;font-size:13px;cursor:pointer;
+  box-shadow:0 4px 16px rgba(45,101,79,.28)}
+.btn:hover{background:#214c3b}
+@media(max-width:900px){.cards,.grid2,.grid3{grid-template-columns:1fr}}
+@media print{
+  body{background:#fff}
+  .wrap{max-width:none;padding:0}
+  .btn{display:none}
+  .figbox{overflow:visible;box-shadow:none}
+  svg.map{min-width:0}
+  h2{break-after:avoid}
+  table,.card,.box,.loop,.sysbar{break-inside:avoid}
+  @page{size:A3 landscape;margin:12mm}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="kicker">AS-IS PROCESS MAP · 现状流程图（人工链路）</div>
+  <h1>办事材料预检与服务协同 · 现状流程图</h1>
+  <p class="sub">云州市便民服务中心 · 案例「材料补了一次又一次」 · 依据六角色访谈事实编号与四份可核对资料绘制 · 2026-11-12</p>
+  <div class="chips">
+    <div class="chip">补正率 <b>36%</b> → 目标 18%</div>
+    <div class="chip">清单解释 <b>12 → 5</b> 分钟</div>
+    <div class="chip">每日咨询 <b>600</b> 件</div>
+    <div class="chip">人工清单核对 <b>约 8 人时</b>/日</div>
+    <div class="chip warn">三套「办完」口径 <b>不一致</b></div>
+    <div class="chip">主流程 <b>6</b> 节点 · 异常转人工 <b>4</b> 类</div>
+  </div>
+  <div class="notice"><b>读图前须知：</b>本图还原的是<b>现有人工流程</b>。「完整性预检」目前是窗口逐项人工比对，不是 AI 预检；AI 预检属于待验证的候选需求，尚未上线，因此未画入现状链路。所有数字为访谈口径，样本范围与时间窗尚未核实，不作为已验证基线。</div>
+</header>
+
+<h2>图 1 · 现状主流程泳道图</h2>
+<p class="h2note">触发 → 输入 → 人工判断 → 交接 → 输出 → 异常；每个节点标注待办责任人与证据编号，瓶颈与返工回路单独标出。</p>
+<div class="legend">
+  <span><i></i>正向流转</span>
+  <span><i class="dash"></i>退回 / 升级 / 裁定</span>
+  <span><i class="back"></i>返工闭环（红色节点）</span>
+  <span>◆ 菱形判断点 · 圆点编号 = 步骤序号 · [fxx] = 访谈事实编号</span>
+</div>
+
+<div class="figbox">
+<svg class="map" viewBox="0 0 1440 720" role="img" aria-label="云州市便民服务中心办事材料预检现状泳道流程图">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#2d654f"/></marker>
+    <marker id="aram" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#a9702a"/></marker>
+    <marker id="arred" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#b3473b"/></marker>
+    <marker id="arsoft" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#6f8a79"/></marker>
+  </defs>
+
+  <!-- 泳道背景 -->
+  <rect class="band" x="0" y="56" width="1440" height="124"/>
+  <rect class="band alt" x="0" y="180" width="1440" height="180"/>
+  <rect class="band" x="0" y="360" width="1440" height="180"/>
+  <rect class="band alt" x="0" y="540" width="1440" height="160"/>
+  <!-- 阶段轴 -->
+  <rect class="axis" x="0" y="0" width="1440" height="56"/>
+  <text class="axis-s" x="18" y="22">阶段 / 泳道</text>
+  <text class="axis-s" x="18" y="42">责任人 →</text>
+  <g>
+    <text class="axis-t" x="257" y="24" text-anchor="middle">1 · 咨询</text>
+    <text class="axis-s" x="257" y="43" text-anchor="middle">窗口 / 热线承接</text>
+    <text class="axis-t" x="472" y="24" text-anchor="middle">2 · 材料提交</text>
+    <text class="axis-s" x="472" y="43" text-anchor="middle">群众 → 窗口</text>
+    <text class="axis-t" x="687" y="24" text-anchor="middle">3 · 完整性预检（人工）</text>
+    <text class="axis-s" x="687" y="43" text-anchor="middle">窗口逐项比对</text>
+    <text class="axis-t" x="902" y="24" text-anchor="middle">4 · 专业审核</text>
+    <text class="axis-s" x="902" y="43" text-anchor="middle">业务审核员校核</text>
+    <text class="axis-t" x="1117" y="24" text-anchor="middle">5 · 补正 / 返工</text>
+    <text class="axis-s" x="1117" y="43" text-anchor="middle">退回原步骤</text>
+    <text class="axis-t" x="1332" y="24" text-anchor="middle">6 · 办理通知 · 答复</text>
+    <text class="axis-s" x="1332" y="43" text-anchor="middle">热线送达 / 反馈</text>
+  </g>
+  <g stroke="#cfe2d3" stroke-width="1">
+    <path d="M365 0 V720 M580 0 V720 M795 0 V720 M1010 0 V720 M1225 0 V720"/>
+  </g>
+  <g stroke="#d9e0d4" stroke-width="1">
+    <path d="M0 180 H1440 M0 360 H1440 M0 540 H1440 M0 700 H1440"/>
+  </g>
+  <!-- 泳道标签 -->
+  <g>
+    <rect class="lane" x="0" y="56" width="150" height="124"/>
+    <text class="lane-t" x="16" y="108">办事群众</text>
+    <text class="lane-s" x="16" y="128">触发者 / 反复跑动</text>
+    <rect class="lane" x="0" y="180" width="150" height="180"/>
+    <text class="lane-t" x="16" y="252">窗口 · 热线</text>
+    <text class="lane-s" x="16" y="272">林亦舟 · 叶书</text>
+    <text class="lane-s" x="16" y="290">一线操作与解释</text>
+    <rect class="lane" x="0" y="360" width="150" height="180"/>
+    <text class="lane-t" x="16" y="432">业务审核</text>
+    <text class="lane-s" x="16" y="452">唐映秋</text>
+    <text class="lane-s" x="16" y="470">流程 / 交接 / 分派</text>
+    <rect class="lane" x="0" y="540" width="150" height="160"/>
+    <text class="lane-t" x="16" y="612">监督 · 管理</text>
+    <text class="lane-s" x="16" y="632">傅景 · 顾明岚</text>
+    <text class="lane-s" x="16" y="650">仅在异常 / 复盘介入</text>
+  </g>
+
+  <!-- ===== 连线（先画，节点后画覆盖） ===== -->
+  <g>
+    <path class="flow" d="M257 158 V210"/>
+    <path class="flow" d="M472 158 V210"/>
+    <path class="flow" d="M346 245 H379"/>
+    <path class="flow" d="M561 245 H594"/>
+    <path class="flow" d="M776 245 H809"/>
+    <path class="flow" d="M991 245 H1024"/>
+    <path class="flow" d="M1206 245 H1239"/>
+    <path class="flow" d="M902 276 V390"/>
+    <path class="flow" d="M991 425 H1024"/>
+    <path class="flow" d="M687 276 V296"/>
+    <path class="flow" d="M902 456 V476"/>
+    <!-- 判断 6 否 -> 退回补正 -->
+    <path class="flow back" d="M768 316 H1004 V425 H1024"/>
+    <!-- 判断 9 是 -> 转人工裁定 -->
+    <path class="flow dash" d="M902 516 V576"/>
+    <!-- 裁定后退回原步骤 -->
+    <path class="flow dash" d="M991 611 H1040 V460"/>
+    <!-- 退回链条：审核 -> 窗口 -> 群众 -->
+    <path class="flow back" d="M1117 394 V280"/>
+    <path class="flow back" d="M1117 214 V162"/>
+    <!-- 办理后进入答复与反馈闭环 -->
+    <path class="flow soft" d="M1332 276 V576"/>
+  </g>
+  <text class="cap-r" x="800" y="310">否 · 清单不一致</text>
+  <text class="cap-j" x="912" y="536">是 · 异常 / 冲突</text>
+  <text class="cap-r" x="1128" y="340">退回</text>
+  <text class="cap-r" x="1128" y="190">再跑</text>
+  <text class="tag" x="912" y="300">交接确认</text>
+  <text class="tag" x="1050" y="630">裁定后回原步骤</text>
+  <text class="tag" x="1342" y="430">服务反馈</text>
+
+  <!-- ===== 节点 ===== -->
+  <!-- L1 C1 ① -->
+  <g transform="translate(168,96)">
+    <rect class="n" width="178" height="62" rx="9"/>
+    <rect x="0" y="0" width="4" height="62" rx="2" fill="#2d654f"/>
+    <circle cx="19" cy="18" r="9" fill="#e9f2ea"/><text class="num" x="19" y="22" text-anchor="middle" font-size="11" font-weight="700">1</text>
+    <text class="t" x="34" y="22">按线上清单备料</text>
+    <text class="s" x="12" y="40">触发：办事需求</text>
+    <text class="s" x="12" y="55">输出：自备材料</text>
+    <text class="ev" x="168" y="55" text-anchor="end">f10</text>
+  </g>
+  <!-- L2 C1 ② -->
+  <g transform="translate(168,214)">
+    <rect class="n" width="178" height="62" rx="9"/>
+    <rect x="0" y="0" width="4" height="62" rx="2" fill="#2d654f"/>
+    <circle cx="19" cy="18" r="9" fill="#e9f2ea"/><text class="num" x="19" y="22" text-anchor="middle" font-size="11" font-weight="700">2</text>
+    <text class="t" x="34" y="22">咨询受理 · 清单解释</text>
+    <text class="s" x="12" y="40">输入：线上清单 / 电话咨询</text>
+    <text class="s" x="12" y="55">输出：口头解释 12 分钟</text>
+    <text class="ev" x="168" y="55" text-anchor="end">f12 f51</text>
+  </g>
+  <!-- L1 C2 ③ -->
+  <g transform="translate(383,96)">
+    <rect class="n" width="178" height="62" rx="9"/>
+    <rect x="0" y="0" width="4" height="62" rx="2" fill="#2d654f"/>
+    <circle cx="19" cy="18" r="9" fill="#e9f2ea"/><text class="num" x="19" y="22" text-anchor="middle" font-size="11" font-weight="700">3</text>
+    <text class="t" x="34" y="22">到窗口递交材料</text>
+    <text class="s" x="12" y="40">输入：材料 + 咨询结果</text>
+    <text class="s" x="12" y="55">输出：待收件材料</text>
+    <text class="ev" x="168" y="55" text-anchor="end">f10</text>
+  </g>
+  <!-- L2 C2 ④ -->
+  <g transform="translate(383,214)">
+    <rect class="n" width="178" height="62" rx="9"/>
+    <rect x="0" y="0" width="4" height="62" rx="2" fill="#2d654f"/>
+    <circle cx="19" cy="18" r="9" fill="#e9f2ea"/><text class="num" x="19" y="22" text-anchor="middle" font-size="11" font-weight="700">4</text>
+    <text class="t" x="34" y="22">收件登记 · 草稿暂存</text>
+    <text class="s" x="12" y="40">终端受限：只能用现有终端</text>
+    <text class="s" x="12" y="55">草稿须标最后同步时间</text>
+    <text class="ev" x="168" y="55" text-anchor="end">f13</text>
+  </g>
+  <!-- L2 C3 ⑤ -->
+  <g transform="translate(598,214)">
+    <rect class="n" width="178" height="62" rx="9"/>
+    <rect x="0" y="0" width="4" height="62" rx="2" fill="#b3473b"/>
+    <circle cx="19" cy="18" r="9" fill="#fbece9"/><text class="num back" x="19" y="22" text-anchor="middle" font-size="11" font-weight="700">5</text>
+    <text class="t" x="34" y="22">完整性预检（人工）</text>
+    <text class="s" x="12" y="40">输入：线上清单 / 窗口要求</text>
+    <text class="s" x="12" y="55">瓶颈：8 人时/日</text>
+    <text class="ev" x="168" y="55" text-anchor="end">f10 f12</text>
+  </g>
+  <!-- 判断 ⑥ -->
+  <g transform="translate(598,296)">
+    <rect class="pill-r" width="178" height="40" rx="8"/>
+    <text class="cap-r" x="12" y="17">◆ 判断 6：清单一致？</text>
+    <text class="s" x="12" y="32">否 → ⑪ 退回补正（保留原因）</text>
+  </g>
+  <!-- L2 C4 ⑦ -->
+  <g transform="translate(813,214)">
+    <rect class="n" width="178" height="62" rx="9"/>
+    <rect x="0" y="0" width="4" height="62" rx="2" fill="#2d654f"/>
+    <circle cx="19" cy="18" r="9" fill="#e9f2ea"/><text class="num" x="19" y="22" text-anchor="middle" font-size="11" font-weight="700">7</text>
+    <text class="t" x="34" y="22">跨岗交接 · 接手确认</text>
+    <text class="s" x="12" y="40">编号 / 版本 / 状态 / 未决项</text>
+    <text class="s" x="12" y="55">确认接手才关本岗待办</text>
+    <text class="ev" x="168" y="55" text-anchor="end">f23</text>
+  </g>
+  <!-- L3 C4 ⑧ -->
+  <g transform="translate(813,394)">
+    <rect class="n" width="178" height="62" rx="9"/>
+    <rect x="0" y="0" width="4" height="62" rx="2" fill="#2d654f"/>
+    <circle cx="19" cy="18" r="9" fill="#e9f2ea"/><text class="num" x="19" y="22" text-anchor="middle" font-size="11" font-weight="700">8</text>
+    <text class="t" x="34" y="22">专业审核 · 校核五类</text>
+    <text class="s" x="12" y="40">清单/版本/样本/补正原因/状态</text>
+    <text class="s" x="12" y="55">按生效日期选版本</text>
+    <text class="ev" x="168" y="55" text-anchor="end">f20 f21 f24</text>
+  </g>
+  <!-- 判断 ⑨ -->
+  <g transform="translate(813,476)">
+    <rect class="pill-j" width="178" height="40" rx="8"/>
+    <text class="cap-j" x="12" y="17">◆ 判断 9：法定有效？异常？</text>
+    <text class="s" x="12" y="32">是 → ⑩ 转人工 · 四类触发</text>
+  </g>
+  <!-- L4 C4 ⑩ -->
+  <g transform="translate(813,580)">
+    <rect class="n sponsor" width="178" height="62" rx="9"/>
+    <rect x="0" y="0" width="4" height="62" rx="2" fill="#a9702a"/>
+    <circle cx="19" cy="18" r="9" fill="#fdf3e3"/><text class="cap-j" x="19" y="22" text-anchor="middle" font-size="11" font-weight="700">10</text>
+    <text class="t" x="34" y="22">转人工裁定 · 分派</text>
+    <text class="s" x="12" y="40">唐映秋分派 / 傅景裁定冲突</text>
+    <text class="s" x="12" y="55">超时升级主任</text>
+    <text class="ev" x="168" y="55" text-anchor="end">f24 f25 f44</text>
+  </g>
+  <!-- L3 C5 ⑪ -->
+  <g transform="translate(1028,394)">
+    <rect class="n back" width="178" height="62" rx="9"/>
+    <rect x="0" y="0" width="4" height="62" rx="2" fill="#b3473b"/>
+    <circle cx="19" cy="18" r="9" fill="#ffffff"/><text class="num back" x="19" y="22" text-anchor="middle" font-size="10" font-weight="700">11</text>
+    <text class="t" x="34" y="22">退回补正（保留原因）</text>
+    <text class="s" x="12" y="40">退回原步骤 · 原因随单</text>
+    <text class="s" x="12" y="55">责任人：唐映秋</text>
+    <text class="ev" x="168" y="55" text-anchor="end">f20</text>
+  </g>
+  <!-- L2 C5 ⑫ -->
+  <g transform="translate(1028,214)">
+    <rect class="n back" width="178" height="62" rx="9"/>
+    <rect x="0" y="0" width="4" height="62" rx="2" fill="#b3473b"/>
+    <circle cx="19" cy="18" r="9" fill="#ffffff"/><text class="num back" x="19" y="22" text-anchor="middle" font-size="10" font-weight="700">12</text>
+    <text class="t" x="34" y="22">补正解释 · 再次收件</text>
+    <text class="s" x="12" y="40">关键说明留在便签 / 群</text>
+    <text class="s" x="12" y="55">说明不随单交接</text>
+    <text class="ev" x="168" y="55" text-anchor="end">f14 f23</text>
+  </g>
+  <!-- L1 C5 ⑬ -->
+  <g transform="translate(1028,96)">
+    <rect class="n back" width="178" height="62" rx="9"/>
+    <rect x="0" y="0" width="4" height="62" rx="2" fill="#b3473b"/>
+    <circle cx="19" cy="18" r="9" fill="#ffffff"/><text class="num back" x="19" y="22" text-anchor="middle" font-size="10" font-weight="700">13</text>
+    <text class="t" x="34" y="22">群众再次跑动补材料</text>
+    <text class="s" x="12" y="40">输出：补正后材料</text>
+    <text class="s" x="12" y="55">闭环回到 ③ → ④</text>
+    <text class="ev" x="168" y="55" text-anchor="end">f10 f00</text>
+  </g>
+  <!-- L2 C6 ⑭ -->
+  <g transform="translate(1243,214)">
+    <rect class="n" width="178" height="62" rx="9"/>
+    <rect x="0" y="0" width="4" height="62" rx="2" fill="#2d654f"/>
+    <circle cx="19" cy="18" r="9" fill="#e9f2ea"/><text class="num" x="19" y="22" text-anchor="middle" font-size="10" font-weight="700">14</text>
+    <text class="t" x="34" y="22">办理通知 → 热线答复</text>
+    <text class="s" x="12" y="40">窗口：材料完整 / 科室：法定有效</text>
+    <text class="s" x="12" y="55">热线：答复已送达</text>
+    <text class="ev" x="168" y="55" text-anchor="end">f50 f53</text>
+  </g>
+  <!-- L4 C6 ⑮ -->
+  <g transform="translate(1243,580)">
+    <rect class="n sponsor" width="178" height="62" rx="9"/>
+    <rect x="0" y="0" width="4" height="62" rx="2" fill="#2d654f"/>
+    <circle cx="19" cy="18" r="9" fill="#e9f2ea"/><text class="num" x="19" y="22" text-anchor="middle" font-size="10" font-weight="700">15</text>
+    <text class="t" x="34" y="22">投诉反馈 · 每周复盘</text>
+    <text class="s" x="12" y="40">叶书受理 / 唐映秋核对</text>
+    <text class="s" x="12" y="55">复测后更新规则</text>
+    <text class="ev" x="168" y="55" text-anchor="end">f54 f55</text>
+  </g>
+  <!-- 空白泳道提示 -->
+  <text class="ev" x="168" y="440">监督层不介入常规收件；仅在版本冲突、四类异常、风险否决与每周复盘时介入（f24 f42 f44 f55）</text>
+  <text class="ev" x="168" y="626">常规链路无系统自动判定：审批决定由法定流程与人员完成（f40 f52）</text>
+  <text class="ev" x="1243" y="424">三套完成时间分别记录（f53）</text>
+  <text class="ev" x="1243" y="440">不能用通知数代替完成量（f51）</text>
+
+  <!-- 底部 -->
+  <rect x="0" y="700" width="1440" height="20" fill="#f4f7f0"/>
+  <text class="ev" x="12" y="714">依据：government-service-f00 ~ f55（六角色访谈事实） · 政务-001 ~ 036 · 资料 government-service-01 ~ 04 · 合成训练资料，不代表真实授权或客户验收</text>
+</svg>
+</div>
+
+<div class="loop">
+  <b>返工闭环（图 1 红色链路）</b>：清单口径不一致是反复跑的直接触发点。⑤ 人工比对发现缺项 → ⑥ 判「否」 → ⑪ 退回补正（保留原因）→ ⑫ 窗口解释并再收件 → ⑬ 群众再次跑动 → 回到 ③ 重新递交。现状补正率 36%，各节点等待与处理时间管理层尚未分别量出，因此无法据此排序优先环节（f00 f01 f10）。
+  <div class="seq">
+    <span>⑤ 人工预检发现缺项</span><i>→</i><span>⑪ 退回补正</span><i>→</i><span>⑫ 窗口解释</span><i>→</i><span>⑬ 群众再跑</span><i>↺</i><span>③ 重新递交</span>
+  </div>
+</div>
+
+<div class="sysbar">
+  <b>系统与数据支撑带（贯穿全流程，秦芮负责）</b>
+  <ul>
+    <li>三套系统并行：政务办事平台、材料库、热线工单；账号权限独立维护，<b>业务状态无统一视图</b>，只能逐套核对（f30）。</li>
+    <li>接口<b>只读</b>公开事项与授权材料，不能自动作出行政决定；预检结论只能作提示，最终判定靠人工（f32 f40）。</li>
+    <li>数据质量：事项编码不同步、材料有效期与补正时间缺字段；先校验主编号 / 事件时间 / 版本字段，有歧义的记录进<b>人工修复队列</b>，不进入自动推荐样本（f31 f33）。</li>
+    <li>时效：试点计划每天两次更新已授权业务状态，超一个更新周期标「待刷新」，不能作为实时承诺；接口中断时用带时间戳的上一份只读快照并显示「暂未更新」，重连后按业务编号去重补齐，人工流程照常（f34 f35）。</li>
+  </ul>
+</div>
+
+<h2>节点明细 · 输入 / 输出 / 待办责任人</h2>
+<p class="h2note">与图 1 编号一一对应；证据编号可回查 discovery-report.md 与 discovery-report.json。</p>
+<table>
+<thead><tr><th style="width:52px">序号</th><th style="width:170px">步骤 / 判断</th><th>输入</th><th>输出</th><th style="width:190px">待办责任人</th><th style="width:110px">证据</th></tr></thead>
+<tbody>
+<tr><td>①</td><td>按线上清单备料（触发）</td><td>办事需求、线上清单</td><td>自备材料</td><td>办事群众</td><td class="e">f10 · 政务-004</td></tr>
+<tr><td>②</td><td>咨询受理与清单解释</td><td>线上清单、电话 / 现场咨询</td><td>口头解释（平均 12 分钟）</td><td>林亦舟 / 叶书</td><td class="e">f12 f51 f00</td></tr>
+<tr><td>③</td><td>到窗口递交材料</td><td>自备材料、咨询结果</td><td>待收件材料</td><td>办事群众 → 窗口</td><td class="e">f10</td></tr>
+<tr><td>④</td><td>收件登记、草稿暂存</td><td>递交材料、现有终端</td><td>草稿（标最后同步时间）</td><td>林亦舟</td><td class="e">f13 f14</td></tr>
+<tr><td>⑤</td><td><b>完整性预检（人工逐项比对）</b></td><td>线上清单 + 窗口实际要求 + 生效版本</td><td>缺项 / 不一致结论</td><td><b>林亦舟（瓶颈 · 约 8 人时/日）</b></td><td class="e">f10 f12 f24</td></tr>
+<tr><td>⑥</td><td>◆ 判断：清单一致？</td><td>比对结论</td><td>一致 → ⑦；不一致 → ⑪</td><td>林亦舟（只判断、不作审批）</td><td class="e">f10 f15</td></tr>
+<tr><td>⑦</td><td>跨岗交接、接手确认</td><td>业务编号 / 当前版本 / 处理状态 / 未解决事项 / 接手人</td><td>待办转移（对方确认接手才结束本岗待办，仅发消息不算完成）</td><td>唐映秋（规则）· 林亦舟（发起）</td><td class="e">f23 f25</td></tr>
+<tr><td>⑧</td><td>专业审核、校核五类资料</td><td>事项清单、生效版本、材料样本、补正原因、办理状态</td><td>法定有效性核对结果</td><td>唐映秋（整理 / 校核 / 发起复核）</td><td class="e">f20 f21 f22 f24</td></tr>
+<tr><td>⑨</td><td>◆ 判断：法定有效？四类异常？</td><td>审核结果、有效期字段、冲突版本</td><td>正常 → ⑭；异常 → ⑩</td><td>唐映秋（发现）· 傅景（裁定）</td><td class="e">f11 f24 f44</td></tr>
+<tr><td>⑩</td><td>转人工裁定、分派与升级</td><td>触发原因、两版本材料、异常单据</td><td>接手人 + 确认时间 + 裁定结论</td><td>唐映秋分派 / 傅景签核 / 超时升级顾明岚</td><td class="e">f24 f25 f44 f45</td></tr>
+<tr><td>⑪</td><td>退回补正（保留原因）</td><td>缺项与不一致说明</td><td>补正要求（原因随单）</td><td>唐映秋</td><td class="e">f20</td></tr>
+<tr><td>⑫</td><td>补正解释、再次收件</td><td>补正要求、群众补交材料</td><td>二次收件记录；关键说明留便签 / 群，不随单交接</td><td>林亦舟</td><td class="e">f14 f13 f23</td></tr>
+<tr><td>⑬</td><td>群众再次跑动补材料</td><td>补正要求</td><td>补正后材料 → 回到 ③</td><td>办事群众</td><td class="e">f10 f00</td></tr>
+<tr><td>⑭</td><td>办理通知 → 热线答复送达</td><td>审核通过结论</td><td>通知 / 答复；三套「办完」口径并存</td><td>窗口 / 业务科室 / 叶书</td><td class="e">f50 f53</td></tr>
+<tr><td>⑮</td><td>投诉反馈与每周复盘</td><td>原业务编号 + 当时资料版本 + 交接记录</td><td>误判例子、改进负责人、复测后规则版本</td><td>叶书受理 / 唐映秋核对 / 顾明岚确认</td><td class="e">f54 f55</td></tr>
+</tbody>
+</table>
+
+<h2>图 2 · 四条异常路径与转人工</h2>
+<p class="h2note">逐条标明触发点、暂停 / 拦截方式、接手岗位与确认时点；四类均需标注触发原因、接手人、确认时间，不能只给一句模糊提醒（f44）。</p>
+<div class="cards">
+  <div class="card">
+    <h3>A · 证件跨业务复用已过期，系统仍显示曾审核有效</h3>
+    <p class="trigger">触发点：⑤ 完整性预检 / ⑧ 专业审核 · 材料有效期字段缺失（f11 f31）</p>
+    <dl>
+      <dt>暂停 / 拦截</dt><dd>窗口<b>暂停该建议</b>，界面显示对应原记录与待确认字段；<b>错误结果不得覆盖原记录</b>；预检只提示，是否可拦截、拦截权限归属尚未书面确认。</dd>
+      <dt>接手岗位</dt><dd>业务审核员唐映秋核对后继续；涉及签核由傅景把关。</dd>
+      <dt>确认时点</dt><dd>标注触发原因、接手人、确认时间；对方确认接手才结束本岗待办。</dd>
+    </dl>
+    <div class="foot">证据：f11 f15 f31 f44 · 停止条件触及即暂停试点并由负责人复盘（f42）</div>
+  </div>
+  <div class="card">
+    <h3>B · 资料缺少依据</h3>
+    <p class="trigger">触发点：⑧ 专业审核 · 事项编码不同步、主编号 / 版本字段有歧义（f31 f33）</p>
+    <dl>
+      <dt>暂停 / 拦截</dt><dd>该记录<b>不进入自动推荐样本</b>，暂停建议并转入人工修复队列；歧义未消解前不对外解释结论。</dd>
+      <dt>接手岗位</dt><dd>唐映秋分派实际处理人；秦芮负责字段修复与最小字段集；跨岗须明确下一责任人。</dd>
+      <dt>确认时点</dt><dd>修复后按业务编号回写并留痕；超约定时限升级顾明岚；接手人确认时间入审计链。</dd>
+    </dl>
+    <div class="foot">证据：f33 f25 f44 f45 · 修复工时占比尚未核实</div>
+  </div>
+  <div class="card">
+    <h3>C · 两个版本冲突</h3>
+    <p class="trigger">触发点：⑧ 按生效日期与适用范围选版本时（f24）</p>
+    <dl>
+      <dt>暂停 / 拦截</dt><dd>唐映秋<b>不自行合并、不选较宽松条款</b>，把两个版本一并附上，暂停流程等待裁定。</dd>
+      <dt>接手岗位</dt><dd>数据与流程监督员傅景裁定；唐映秋不能代替其专业签核（f22）。</dd>
+      <dt>确认时点</dt><dd>裁定结论与签核人留痕；试点每周收集误判例子，由顾明岚确认改进负责人，<b>先复测再更新规则版本</b>。</dd>
+    </dl>
+    <div class="foot">证据：f24 f22 f44 f55 · 规则版本维护由业务负责人负责</div>
+  </div>
+  <div class="card">
+    <h3>D · 关键系统不可用 / 接口中断</h3>
+    <p class="trigger">触发点：任一依赖政务办事平台、材料库、热线工单的步骤（f30 f35）</p>
+    <dl>
+      <dt>暂停 / 拦截</dt><dd>继续使用<b>带时间戳的上一份只读快照</b>，界面显示「暂未更新」；现有人工流程照常运行，旧状态不得作实时承诺。</dd>
+      <dt>接手岗位</dt><dd>秦芮负责重连与去重补齐；窗口维持人工核对与解释。</dd>
+      <dt>确认时点</dt><dd>重连后按业务编号去重补齐，<b>不反复触发同一待办</b>；超过一个更新周期标「待刷新」。</dd>
+    </dl>
+    <div class="foot">证据：f35 f34 f44 · 快照时效阈值与允许降级事项尚未核实</div>
+  </div>
+</div>
+<div class="loop" style="background:var(--amber2);border-color:var(--amber3)">
+  <b style="color:var(--amber)">四类异常的共性交接规则</b>：异常先由业务审核员分派给实际处理人，<b>超过约定时限再升级到服务中心主任</b>；跨岗问题不能只写「已转交」，必须明确下一责任人。交接至少包含业务编号、当前版本、处理状态、未解决事项和接手人，<b>对方确认接手才结束本岗待办</b>。转人工须标注触发原因、接手人和确认时间（f23 f25 f44）。
+</div>
+
+<h2>理想流程 vs 现场做法</h2>
+<p class="h2note">差异显式对照，避免把制度描述当成现场实际。</p>
+<table>
+<thead><tr><th style="width:130px">环节</th><th>理想 / 制度口径</th><th>现场实际做法</th><th>差异原因</th><th>风险</th><th style="width:100px">证据</th></tr></thead>
+<tbody>
+<tr><td>清单版本</td><td>按生效日期与适用范围选唯一版本，线上与窗口一致</td><td>线上清单与窗口实际要求不一致，窗口凭经验先收先退</td><td>规则由业务负责人维护，发布与对齐未打通</td><td>办事人反复跑、补正率 36%</td><td class="e">f10 f24</td></tr>
+<tr><td>现场说明</td><td>说明随单据流转，接手人确认后责任转移</td><td>关键说明留在个人便签或群里、事后补录，<b>不随单据交接</b></td><td>高峰期只能用现有终端，正式记录来不及承载临时口径</td><td>交接断点、换人重核；便签内容涉合规与个人信息，非窗口可定</td><td class="e">f14 f13 f23</td></tr>
+<tr><td>完成口径</td><td>统一分母、排除规则与统计周期，各岗完成时间分别记录</td><td>窗口看材料完整、业务科室看法定有效、热线看答复已送达</td><td>三套系统账号独立、业务状态无统一视图</td><td>指标失真、拆单虚增成功、投诉落热线</td><td class="e">f50 f53 f30</td></tr>
+<tr><td>异常处置</td><td>按规则暂停、转人工并留痕，不覆盖原记录</td><td>窗口自行暂停建议、交审核员核对；「只提示还是可拦截」未定</td><td>拦截权限、接手人清单与确认时限尚未书面确认</td><td>错误结果被覆盖、责任不清、兜底变挂起</td><td class="e">f11 f15 f44</td></tr>
+<tr><td>数据时效</td><td>按有效期与补正时间字段判断，状态实时一致</td><td>编码不同步、有效期与补正时间缺字段；每天两次更新、超周期标待刷新</td><td>接口只读、无统一视图，缺字段无法自动判断</td><td>过期证件仍显示「曾审核有效」，旧状态被当实时承诺</td><td class="e">f31 f34 f11</td></tr>
+</tbody>
+</table>
+
+<h2>只能由人完成的判断 · 瓶颈与责任人</h2>
+<div class="grid2">
+  <div class="box">
+    <h3>只能由人完成（AI / 预检仅作提示，不输出批准结论）</h3>
+    <ul>
+      <li><b>行政审批决定</b>：由法定流程与人员完成，个体材料按授权查看 <span class="evtag">f40 f32</span></li>
+      <li><b>真实法律效力解释</b>：清单预检与补正解释不代替审批、不解释法律效力 <span class="evtag">f52 f05</span></li>
+      <li><b>规则冲突裁定</b>：两版本附监督员，由傅景裁定，不自行合并 <span class="evtag">f24 f22</span></li>
+      <li><b>转人工终审</b>：标注触发原因 / 接手人 / 确认时间，人工签核 <span class="evtag">f44 f45</span></li>
+      <li><b>对外承诺与最终决定</b>：由对应审批人确认，不能借用他人账号 <span class="evtag">f41 f54</span></li>
+    </ul>
+  </div>
+  <div class="box">
+    <h3>瓶颈与责任人（节点级耗时尚未量出，仅方向判断）</h3>
+    <ul>
+      <li><b>清单核对与解释（最费时）</b>：林亦舟 / 叶书 · 600 件咨询/日、约 8 人时、12 分钟/次 <span class="evtag">f10 f12 f51</span></li>
+      <li><b>退回补正与交接确认</b>：唐映秋 · 保留退回原因、接手人确认、异常分派 <span class="evtag">f20 f23 f25</span></li>
+      <li><b>版本冲突与四类异常裁定</b>：傅景 · 专业签核、风险否决、留存 90 天复核 <span class="evtag">f24 f42 f43 f44</span></li>
+      <li><b>超时升级与每周复盘</b>：顾明岚 · 确认改进负责人、复测后更新规则 <span class="evtag">f25 f55</span></li>
+      <li><b>数据字段与接口快照</b>：秦芮 · 人工修复队列、去重补齐、待刷新标识 <span class="evtag">f31 f33 f35</span></li>
+    </ul>
+  </div>
+</div>
+
+<h2>基线数字与待核实事项</h2>
+<div class="grid2">
+  <div class="box">
+    <h3>现状基线（访谈口径，均须按样本复核）</h3>
+    <table style="border:none;font-size:12.5px">
+      <tr><th>指标</th><th>现状 / 目标</th><th>口径状态</th></tr>
+      <tr><td>补正率</td><td>36% → 18%</td><td>目标值；分母与排除规则未定</td></tr>
+      <tr><td>清单解释平均时长</td><td>12 → 5 分钟</td><td>分母（咨询件 / 业务件 / 交接环节）未定</td></tr>
+      <tr><td>每日咨询量</td><td>600 件</td><td>热线称样本覆盖范围未核实，不能当全量</td></tr>
+      <tr><td>人工清单核对</td><td>约 8 人时 / 日</td><td>事件样本，非全量工时</td></tr>
+      <tr><td>清单解释一致率</td><td>验收硬线 99%</td><td>基准、样本取法、分歧裁定人未核实</td></tr>
+      <tr><td>首期预算</td><td>18 万元</td><td>集成 / 培训 / 验证拆分未核实</td></tr>
+      <tr><td>各节点耗时</td><td>无</td><td>管理层尚未分别量出等待与处理时间</td></tr>
+    </table>
+    <p style="font-size:12px;color:var(--muted);margin:10px 0 0">过程量须逐笔采集交接等待与重新联系次数，<b>不能用发送通知数代替实际完成量</b>；收益须扣除维护与人工复核成本（f51 f53 f03）。</p>
+  </div>
+  <div class="box">
+    <h3>待核实事项（按类型分组）</h3>
+    <ul>
+      <li><b>验收口径</b>：99% 一致率的样本、基准（线上清单还是窗口实际要求）、分歧裁定人；补正率分母、排除规则与统计周期。</li>
+      <li><b>试点范围</b>：两类非紧急事项具体由谁签字确认；首期历史资料回放范围；预检结果能否作为正式受理依据。</li>
+      <li><b>权限与兜底</b>：冲突场景「只提示」还是允许拦截、拦截权限归属；转人工接手人清单与确认时限；升级主任的时限；停止条件与验收签字形式。</li>
+      <li><b>数据与系统</b>：编码不同步 / 缺字段占比与修复工时；只读授权范围；快照时效阈值与允许降级事项；待刷新能否对外解释。</li>
+      <li><b>留存与审计</b>：90 天为暂定，真实期限按组织规则另定；改动是否强制填理由、是否保留历史版本；评价记录归集责任人。</li>
+      <li><b>基线测量</b>：节点级等待 / 处理时间、预检独立单量与耗时、返工与复核成本、脏数据占比、快照误判频次。</li>
+    </ul>
+  </div>
+</div>
+
+<div class="grid3">
+  <div class="mini"><b>证据等级说明</b>36%、12 分钟、600 件、8 人时为六角色访谈已获口径；节点耗时、修复工时、误判频次为待采集，不得当作已验证基线。</div>
+  <div class="mini"><b>调查边界</b>只读核对与人工交接；合成训练资料，不代表真实授权、业务执行或客户验收；调查覆盖 36/36 不等于四来源收敛或需求已确认。</div>
+  <div class="mini"><b>资料索引</b>government-service-01 客户简报 / 02 现状信息请求表 / 03 访谈问题库 / 04 利益相关者分工；事实编号 f00–f55 见 discovery-report.md、.json、.csv。</div>
+</div>
+
+<div class="footnote">
+  绘制依据：现场调研报告（任务 2「还原现状流程」标准参考答案与改进建议）、业务挖掘报告、四份可核对资料、业务需求发现报告（discovery-report.md / .json / .csv）。<br>
+  本图仅呈现现状（As-Is）人工链路与异常路径，不含目标流程（To-Be）、智能体边界或方案设计；如需后续拆分，可在图 1 的 ⑤ / ⑧ / ⑩ 三处继续展开。
+</div>
+
+</div>
+<button class="btn" onclick="window.print()">打印 / 另存为 PDF</button>
+</body>
+</html>
