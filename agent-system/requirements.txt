@@ -1,3 +1,0 @@
-fastapi>=0.110  # 用户指定的 Web 框架，不替换
-uvicorn>=0.27  # ASGI 启动器，仅用于本机运行
-PyYAML>=6.0  # 解析 config.yaml 的配置库，不是中间件
