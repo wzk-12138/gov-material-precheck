@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>办事材料预检智能体 · 业务工作台</title>
+<style>
+  :root{
+    --bg:#f4f7fb; --card:#fff; --ink:#1b2740; --muted:#6b7791; --line:#e4eaf3;
+    --primary:#2056d6; --primary-soft:#eaf0ff; --accent:#0e9f8f; --accent-soft:#e6f7f4;
+    --warn:#c77700; --warn-soft:#fff5e2; --err:#c9352a; --err-soft:#fdecea;
+    --shadow:0 2px 10px rgba(28,48,90,.06),0 8px 28px rgba(28,48,90,.05);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"PingFang SC","Microsoft YaHei","Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.65;-webkit-font-smoothing:antialiased}
+  header{background:linear-gradient(118deg,#16357f 0%,#2056d6 55%,#2f77e8 100%);color:#fff;padding:22px 34px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 4px 18px rgba(22,53,127,.25)}
+  .brand{display:flex;align-items:center;gap:14px}
+  .logo{width:46px;height:46px;border-radius:12px;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.28)}
+  .brand h1{font-size:21px;font-weight:650;letter-spacing:.5px}
+  .brand p{font-size:12px;opacity:.85;margin-top:3px}
+  .hwho{display:flex;align-items:center;gap:10px;font-size:13px;background:rgba(255,255,255,.13);padding:9px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.2)}
+  .dot{width:8px;height:8px;border-radius:50%;background:#7ff0c8;box-shadow:0 0 0 4px rgba(127,240,200,.2)}
+  .layout{display:flex;max-width:1300px;margin:0 auto;padding:24px;gap:22px;align-items:flex-start}
+  aside{width:268px;flex:none;position:sticky;top:24px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}
+  .who{padding:18px}
+  .box-title{font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.5px;margin-bottom:9px}
+  select,input,textarea{width:100%;border:1px solid var(--line);border-radius:9px;padding:9px 11px;font:inherit;color:var(--ink);background:#fff;outline:none;transition:border .15s,box-shadow .15s}
+  select:focus,input:focus,textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
+  .who-meta{margin-top:11px;font-size:12px;color:var(--muted);line-height:1.75}
+  .who-meta b{color:var(--primary)}
+  .who-meta .tag{display:inline-block;background:var(--primary-soft);color:var(--primary);border-radius:6px;padding:1px 8px;font-size:11px;margin-top:6px}
+  .nav{margin-top:14px;padding:8px}
+  .nav-item{display:flex;align-items:center;gap:11px;width:100%;border:0;background:transparent;color:var(--muted);padding:11px 13px;border-radius:9px;cursor:pointer;font:inherit;font-weight:500;text-align:left;transition:.15s}
+  .nav-item:hover{background:var(--bg);color:var(--ink)}
+  .nav-item.active{background:var(--primary-soft);color:var(--primary);font-weight:650}
+  .nav-item svg{width:18px;height:18px;flex:none}
+  main{flex:1;min-width:0}
+  .panel{display:none}
+  .panel.active{display:block;animation:fade .25s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+  .stat{padding:18px 20px}
+  .stat .k{font-size:12px;color:var(--muted)}
+  .stat .v{font-size:29px;font-weight:700;margin-top:3px;letter-spacing:-.5px}
+  .stat .s{font-size:11px;color:var(--accent);margin-top:2px}
+  .section{padding:22px 24px;margin-top:16px}
+  .section h2{font-size:17px;font-weight:650;display:flex;align-items:center;gap:10px;margin-bottom:5px}
+  .section h2 .bar{width:4px;height:18px;background:var(--primary);border-radius:3px}
+  .section .desc{font-size:12.5px;color:var(--muted);margin-bottom:18px}
+  .form-row{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;margin-bottom:12px}
+  .field{flex:1;min-width:180px}
+  .field label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px;font-weight:500}
+  textarea{min-height:76px;resize:vertical}
+  .btn{border:0;border-radius:9px;padding:10px 20px;font:inherit;font-weight:600;cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:7px}
+  .btn.primary{background:var(--primary);color:#fff}
+  .btn.primary:hover{background:#1748b8;box-shadow:0 4px 14px rgba(32,86,214,.3)}
+  .btn.ghost{background:var(--primary-soft);color:var(--primary)}
+  .btn.ghost:hover{background:#dde7ff}
+  .btn:disabled{opacity:.55;cursor:not-allowed;box-shadow:none}
+  .res{margin-top:16px}
+  .notice{border-radius:10px;padding:12px 15px;font-size:13px;margin-bottom:12px}
+  .notice.warn{background:var(--warn-soft);color:#8a5600;border:1px solid #ffe0a8}
+  .notice.ok{background:var(--accent-soft);color:#0a6f66;border:1px solid #b8e8e0}
+  .notice.err{background:var(--err-soft);color:#a32a21;border:1px solid #f6c9c4}
+  .cardlet{background:#fafbfe;border:1px solid var(--line);border-radius:11px;padding:14px 16px;margin-top:10px}
+  .cardlet h3{font-size:14px;font-weight:650;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+  .suggest{background:linear-gradient(135deg,#f0f6ff,#fff);border:1px solid #cfe0ff;border-left:4px solid var(--primary);border-radius:11px;padding:16px 18px;font-size:14.5px;line-height:1.8;color:#1b2f57}
+  .suggest .lbl{font-size:12px;color:var(--primary);font-weight:650;letter-spacing:.5px;margin-bottom:6px}
+  .kv{display:flex;gap:9px;flex-wrap:wrap;margin-top:9px}
+  .kv span{background:var(--bg);border:1px solid var(--line);border-radius:7px;padding:4px 10px;font-size:12px}
+  table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:8px}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--muted);font-weight:600;background:#fafbfd}
+  tr:hover td{background:#fafbfd}
+  .pill{display:inline-block;border-radius:999px;padding:2px 9px;font-size:11px;font-weight:600}
+  .pill.g{background:var(--accent-soft);color:var(--accent)}
+  .pill.b{background:var(--primary-soft);color:var(--primary)}
+  .pill.o{background:var(--warn-soft);color:var(--warn)}
+  .spin{display:inline-block;width:13px;height:13px;border:2px solid rgba(255,255,255,.5);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .empty{color:var(--muted);font-size:13px;padding:14px;text-align:center;background:var(--bg);border-radius:9px}
+  .step{display:flex;gap:10px;align-items:flex-start;padding:8px 0;font-size:13px}
+  .step i{flex:none;width:22px;height:22px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-style:normal;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+  footer{text-align:center;color:var(--muted);font-size:12px;padding:18px 0 30px}
+  @media(max-width:860px){.layout{flex-direction:column;padding:14px}aside{width:100%;position:static}.nav{display:flex;flex-wrap:wrap}.nav-item{width:auto}header{padding:18px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="logo"><svg viewBox="0 0 24 24" width="25" height="25" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V7l8-4z"/><path d="M9 12l2 2 4-4"/></svg></div>
+    <div><h1>办事材料预检智能体</h1><p>材料清单预检 · 补正提示 · 知识查询 · 全程人工把关</p></div>
+  </div>
+  <div class="hwho"><span class="dot"></span><span id="hdr-who">正在进入…</span></div>
+</header>
+
+<div class="layout">
+  <aside>
+    <div class="card who">
+      <div class="box-title">当前登录身份</div>
+      <select id="roleSel" onchange="onRoleChange()"></select>
+      <div class="who-meta" id="whoMeta"></div>
+    </div>
+    <nav class="card nav">
+      <button class="nav-item active" data-tab="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>工作台</button>
+      <button class="nav-item" data-tab="precheck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 3h6l2 3h3v14H4V6h3z"/><path d="M9 12l2 2 4-4"/></svg>材料预检</button>
+      <button class="nav-item" data-tab="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>办事知识查询</button>
+      <button class="nav-item" data-tab="graph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="7" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M8 7l8 0M7 8l4 8M17 9l-4 7"/></svg>知识关联</button>
+      <button class="nav-item" data-tab="wiki"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>知识条目</button>
+      <button class="nav-item" data-tab="admin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-4 3-6 7-6s7 2 7 6"/></svg>人员与权限</button>
+    </nav>
+  </aside>
+
+  <main>
+    <!-- 工作台 -->
+    <section class="panel active" id="tab-home">
+      <div class="grid" id="statGrid"></div>
+      <div class="card section">
+        <h2><span class="bar"></span>欢迎使用</h2>
+        <p class="desc">本系统辅助窗口与业务人员核对办事材料：先查规则依据，再给出补正提示，所有结论都需经办人与审核人确认后才生效，不会替代行政审批。</p>
+        <div class="kv">
+          <span>材料清单预检</span><span>缺件补正提示</span><span>办事规则知识库</span>
+          <span>知识之间的关联</span><span>按岗位分层授权</span><span>全程留痕可追溯</span>
+        </div>
+        <div class="notice warn" style="margin-top:16px">演示环境说明：知识库仅含模拟练习资料，不含任何真实个人材料；系统给出的均为提示性建议，最终以窗口与审核人员人工确认为准。</div>
+      </div>
+      <div class="card section">
+        <h2><span class="bar"></span>使用流程</h2>
+        <div class="step"><i>1</i><div>在「材料预检」填写业务编号、群众咨询的问题和已收到的材料，发起核对。</div></div>
+        <div class="step"><i>2</i><div>系统列出可核对的规则依据与补正提示，并自动挂一张待确认单。</div></div>
+        <div class="step"><i>3</i><div>由具备审核权限的同事接手确认，确认结果写入留痕记录，可随时回看整个处理过程。</div></div>
+      </div>
+    </section>
+
+    <!-- 材料预检 -->
+    <section class="panel" id="tab-precheck">
+      <div class="card section">
+        <h2><span class="bar"></span>材料清单预检</h2>
+        <p class="desc">填写本次业务信息，系统检索规则依据并给出补正提示，结果需人工确认后方可生效。</p>
+        <div class="form-row">
+          <div class="field"><label>业务编号</label><input id="pcBiz" value="DEMO-2026-001" /></div>
+          <div class="field"><label>群众咨询的问题</label><input id="pcQ" value="办理这个事项需要哪些材料，材料不全怎么办？" /></div>
+        </div>
+        <div class="form-row">
+          <div class="field"><label>已收到的材料（用逗号分隔）</label><input id="pcMat" value="身份证复印件,申请表" /></div>
+          <button class="btn primary" id="pcBtn" onclick="doPrecheck()">发起核对</button>
+        </div>
+        <div class="res" id="pcRes"></div>
+      </div>
+    </section>
+
+    <!-- 知识查询 -->
+    <section class="panel" id="tab-search">
+      <div class="card section">
+        <h2><span class="bar"></span>办事知识查询</h2>
+        <p class="desc">按问题查找办事规则与口径，每条结果都标注可核对的出处编号。</p>
+        <div class="form-row">
+          <div class="field"><label>要查询的问题</label><input id="qInput" value="材料补正 一次性告知" /></div>
+          <button class="btn primary" id="qBtn" onclick="doSearch()">查询</button>
+        </div>
+        <div class="res" id="qRes"></div>
+      </div>
+    </section>
+
+    <!-- 知识关联 -->
+    <section class="panel" id="tab-graph">
+      <div class="card section">
+        <h2><span class="bar"></span>知识之间的关联</h2>
+        <p class="desc">查看一条规则与哪些事项、岗位、材料相关联，也可以查两条规则之间的联系。</p>
+        <div class="form-row">
+          <div class="field"><label>知识编号（可从查询结果中获取）</label><input id="gNode" placeholder="例如 F01" /></div>
+          <button class="btn ghost" onclick="doGraph('relations')">查看关联</button>
+          <button class="btn ghost" onclick="doGraph('subgraph')">展开相关</button>
+        </div>
+        <div class="form-row">
+          <div class="field"><label>起点编号</label><input id="gSrc" placeholder="知识编号" /></div>
+          <div class="field"><label>终点编号</label><input id="gDst" placeholder="知识编号" /></div>
+          <button class="btn ghost" onclick="doGraph('path')">查两者联系</button>
+        </div>
+        <div class="res" id="gRes"></div>
+      </div>
+    </section>
+
+    <!-- 知识条目 -->
+    <section class="panel" id="tab-wiki">
+      <div class="card section">
+        <h2><span class="bar"></span>知识条目</h2>
+        <p class="desc">把高频问题整理成一条条可复用的办事口径；草稿需审核通过后才会进入日常查询。</p>
+        <div class="form-row">
+          <button class="btn primary" onclick="doWiki()">查看条目列表</button>
+          <div class="field"><label>按编号查看某一条</label><input id="wNode" placeholder="留空则展示全部" /></div>
+          <button class="btn ghost" onclick="doWikiOne()">查看单条</button>
+        </div>
+        <div class="res" id="wRes"></div>
+      </div>
+    </section>
+
+    <!-- 管理 -->
+    <section class="panel" id="tab-admin">
+      <div class="card section">
+        <h2><span class="bar"></span>人员与权限</h2>
+        <p class="desc">查看岗位分工与权限层级、办理留痕。仅管理员可查看本页内容。</p>
+        <div class="form-row">
+          <button class="btn primary" onclick="doAdmin('roles')">岗位与权限</button>
+          <button class="btn ghost" onclick="doAdmin('audit')">办理留痕</button>
+          <div class="field"><label>按业务编号回看办理过程</label><input id="aBiz" placeholder="输入业务编号" /></div>
+          <button class="btn ghost" id="replayBtn" onclick="doReplay()">回看过程</button>
+        </div>
+        <div class="res" id="aRes"></div>
+      </div>
+    </section>
+  </main>
+</div>
+<footer>办事材料预检智能体 · 模拟练习资料 · 智能提示须经人工确认后方可生效</footer>
+
+<script>
+/* 业务工作台脚本：按当前身份调用服务，把结果整理成业务人员可读的内容 */
+var SHARE = new URLSearchParams(location.search).get('sharecode') || '';  /* 读取访问凭证并在每次请求中携带 */
+var ROLES = {  /* 八个业务岗位 */
+  window:'窗口工作人员', reviewer:'业务审核员', supervisor:'数据与流程监督员',
+  hotline:'热线服务负责人', platform:'政务平台工程师', director:'服务中心主任',
+  platform_admin:'平台管理员（SaaS）', tenant_admin:'租户管理员'
+};
+var TOKENS = {  /* 演示身份凭证 */
+  window:'demo-window-2026', reviewer:'demo-reviewer-2026', supervisor:'demo-supervisor-2026',
+  hotline:'demo-hotline-2026', platform:'demo-platform-2026', director:'demo-director-2026',
+  platform_admin:'demo-padmin-2026', tenant_admin:'demo-tadmin-2026'
+};
+var META = {  /* 岗位说明 */
+  window:['L1 一线经办','受理材料、发起清单预检、查看补正提示；不能自己确认自己发起的结果。'],
+  reviewer:['L2 业务复核','接手确认预检结果、核对材料，可签核知识条目。'],
+  supervisor:['L3 监督决策','专业签核、风险把关、维护知识关联，可查看完整留痕。'],
+  hotline:['L1 咨询答复','答复群众咨询、查询办事口径；不接触材料原文。'],
+  platform:['L3 系统支撑','查看系统运行与知识关联情况，不发起业务预检。'],
+  director:['L3 统筹复盘','查看整体情况与办理留痕，不替代专业签核。'],
+  platform_admin:['平台管理','负责租户开通、资料版本与全局留痕，不参与业务办理。'],
+  tenant_admin:['租户管理','负责本中心账号、权限层级与身份凭证管理，不参与业务办理。']
+};
+var ERRMSG = {  /* 把内部提示转成业务语言 */
+  ROLE_REQUIRED:'请先选择登录身份', ROLE_UNKNOWN:'该身份未登记', AUTH_REQUIRED:'身份凭证已失效，请重新打开页面',
+  AUTH_FAILED:'身份凭证无效', AUTH_ROLE_MISMATCH:'身份与凭证不一致', ACTOR_REQUIRED:'缺少经办人信息',
+  ADMIN_REQUIRED:'当前身份无权查看此内容', ADMIN_FORBIDDEN_BIZ:'管理岗位不参与业务办理',
+  WIKI_DRAFT_NOT_PUBLISHED:'该条目尚未审核发布', GRAPH_NODE_NOT_FOUND:'未找到该知识编号',
+  ERR_VALIDATION:'填写内容不符合要求，请检查后重试', ERR_HTTP:'该功能暂不可用', ERR_INTERNAL:'服务暂时繁忙，请稍后重试'
+};
+
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}  /* 文本转义 */
+function role(){return document.getElementById('roleSel').value}  /* 当前身份 */
+function api(path,opts){  /* 统一请求：带身份、凭证、经办人与访问凭证 */
+  opts=opts||{}; var h={'X-Role':role(),'X-Agent-Token':TOKENS[role()]||'','X-Actor':WEB_ACTOR(role())};
+  if(opts.body)h['Content-Type']='application/json';
+  var i={method:opts.method||'GET',headers:h}; if(opts.body)i.body=opts.body;
+  return fetch(path+(path.indexOf('?')>=0?'&':'?')+'sharecode='+encodeURIComponent(SHARE),i).then(function(r){return r.json()});
+}
+function WEB_ACTOR(r){return r+'-web'}  /* 经办人标识，仅用于留痕 */
+function friendly(code,msg){return ERRMSG[code]||msg||'操作未完成，请稍后重试'}  /* 内部提示转业务语言 */
+function failBox(res){return '<div class="notice err">'+esc(friendly(res.error&&res.error.code,res.error&&res.error.msg))+'</div>'}  /* 失败提示 */
+function emptyBox(t){return '<div class="empty">'+esc(t)+'</div>'}  /* 空结果提示 */
+function kvItem(k,v){return '<span>'+esc(k)+'：'+esc(v)+'</span>'}  /* 键值标签 */
+
+function initRole(){  /* 初始化身份下拉与说明 */
+  var s=document.getElementById('roleSel');
+  Object.keys(ROLES).forEach(function(k){var o=document.createElement('option');o.value=k;o.textContent=ROLES[k];s.appendChild(o)});
+  s.value='window'; onRoleChange();
+}
+function onRoleChange(){  /* 切换身份时更新说明并刷新工作台 */
+  var r=role(),m=META[r]||['',''];
+  document.getElementById('whoMeta').innerHTML='<b>'+esc(ROLES[r])+'</b><br>'+esc(m[1])+'<span class="tag">'+esc(m[0])+'</span>';
+  document.getElementById('hdr-who').textContent=ROLES[r]+' · '+m[0];
+  /* 管理页只对管理员可见，业务岗隐藏对应入口 */
+  var isAdmin=(r==='platform_admin'||r==='tenant_admin');
+  document.querySelector('[data-tab="admin"]').style.display=isAdmin?'':'none';
+  if(!isAdmin&&document.querySelector('[data-tab="admin"]').classList.contains('active'))switchTab('home');
+  loadHome();
+}
+function switchTab(t){  /* 切换功能页 */
+  document.querySelectorAll('.nav-item').forEach(function(b){b.classList.toggle('active',b.dataset.tab===t)});
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.toggle('active',p.id==='tab-'+t)});
+}
+document.querySelectorAll('.nav-item').forEach(function(b){b.addEventListener('click',function(){switchTab(b.dataset.tab)})});
+
+function loadHome(){  /* 工作台概览 */
+  api('/health').then(function(res){
+    if(!res.ok){document.getElementById('statGrid').innerHTML=failBox(res);return}
+    var d=res.data||{},g=d.graph||{},rel=g.relations||{};
+    var types=Object.keys(rel).length;
+    document.getElementById('statGrid').innerHTML=
+      stat('办事知识',g.nodes!=null?g.nodes:'-','条可查知识')+
+      stat('知识关联',g.edges!=null?g.edges:'-','条已登记关联')+
+      stat('关联类型',types,'种关系')+
+      stat('我的身份',META[role()]?META[role()][0]:'-',ROLES[role()]);
+  }).catch(function(e){document.getElementById('statGrid').innerHTML='<div class="notice err">暂时无法连接服务</div>'});
+}
+function stat(k,v,s){return '<div class="card stat"><div class="k">'+esc(k)+'</div><div class="v">'+esc(v)+'</div><div class="s">'+esc(s)+'</div></div>'}  /* 概览卡片 */
+function run(btn,box,path,opts,render){  /* 通用执行与渲染 */
+  var old=btn.innerHTML;btn.disabled=true;btn.innerHTML='<span class="spin"></span> 处理中…';
+  document.getElementById(box).innerHTML='';
+  return api(path,opts).then(function(res){
+    document.getElementById(box).innerHTML=res.ok?render(res.data):failBox(res);
+  }).catch(function(){document.getElementById(box).innerHTML='<div class="notice err">暂时无法连接服务，请稍后重试</div>'})
+   .finally(function(){btn.disabled=false;btn.innerHTML=old});
+}
+function doPrecheck(){  /* 材料预检 */
+  var body=JSON.stringify({
+    business_id:document.getElementById('pcBiz').value||'DEMO-001',
+    question:document.getElementById('pcQ').value||'',
+    materials:(document.getElementById('pcMat').value||'').split(/[,，]/).map(function(s){return s.trim()}).filter(Boolean)
+  });
+  run(document.getElementById('pcBtn'),'pcRes','/precheck',{method:'POST',body:body},function(d){
+    var h='<div class="suggest"><div class="lbl">预检提示（供人工参考）</div>'+esc(d.suggestion||'暂无建议')+'</div>';
+    h+='<div class="notice warn">此结果为系统提示，未经人工确认不生效；请由具备审核权限的同事接手确认。</div>';
+    var t=d.ticket||{};
+    h+='<div class="cardlet"><h3>本次办理</h3><div class="kv">'+
+       kvItem('业务编号',d.business_id)+kvItem('经办岗位',d.role)+kvItem('经办人',d.actor)+
+       kvItem('待确认单',t.ticket_id)+kvItem('单据状态',t.status==='pending'?'待确认':t.status)+'</div></div>';
+    var ev=d.evidence||[];
+    h+='<div class="cardlet"><h3>可核对的规则依据 <span class="pill b">'+ev.length+' 条</span></h3>';
+    if(!ev.length)h+=emptyBox('未找到可核对的依据，请转人工处理');
+    else{h+='<table><thead><tr><th>依据编号</th><th>事项</th><th>相关内容</th></tr></thead><tbody>';
+      ev.forEach(function(x){h+='<tr><td>'+esc(x.short_id||x.id)+'</td><td>'+esc(x.topic||'-')+'</td><td>'+esc(x.text||x.title||'-')+'</td></tr>'});
+      h+='</tbody></table>'}
+    h+='</div>';
+    if(d.graph_refs&&d.graph_refs.length)h+='<div class="cardlet"><h3>相关规则</h3><div class="kv">'+d.graph_refs.slice(0,10).map(function(x){return '<span>'+esc(x)+'</span>'}).join('')+'</div></div>';
+    return h;
+  });
+}
+function doSearch(){  /* 知识查询 */
+  var q=document.getElementById('qInput').value||'';
+  run(document.getElementById('qBtn'),'qRes','/kb/search?q='+encodeURIComponent(q),{},function(d){
+    var hits=d.hits||[];
+    var h='<div class="cardlet"><h3>查询结果 <span class="pill b">'+hits.length+' 条</span></h3>';
+    if(!hits.length)h+=emptyBox('没有查到相关内容，请换个说法或转人工处理');
+    else{h+='<table><thead><tr><th>编号</th><th>事项</th><th>内容</th></tr></thead><tbody>';
+      hits.forEach(function(x){h+='<tr><td>'+esc(x.short_id||x.id)+'</td><td>'+esc(x.topic||'-')+'</td><td>'+esc(x.text||x.title||'-')+'</td></tr>'});
+      h+='</tbody></table>'}
+    return h+'</div>';
+  });
+}
+function doGraph(kind){  /* 知识关联 */
+  var n=document.getElementById('gNode').value.trim(),s=document.getElementById('gSrc').value.trim(),d=document.getElementById('gDst').value.trim();
+  var p='/graph/stats';
+  if(kind==='relations')p='/graph/relations?node_id='+encodeURIComponent(n);
+  if(kind==='subgraph')p='/graph/subgraph?node_id='+encodeURIComponent(n)+'&depth=2';
+  if(kind==='path')p='/graph/path?src='+encodeURIComponent(s)+'&dst='+encodeURIComponent(d);
+  run(document.activeElement,'gRes',p,{},function(x){
+    if(kind==='relations'){
+      var ls=x.links||[];var h='<div class="cardlet"><h3>该知识的关联 <span class="pill b">'+(x.total||ls.length)+' 条</span></h3>';
+      if(!ls.length)h+=emptyBox('暂未登记关联');
+      else{h+='<table><thead><tr><th>关联知识</th><th>关系</th></tr></thead><tbody>';
+        ls.forEach(function(l){h+='<tr><td>'+esc(l.label||l.id||l.dst||'-')+'</td><td>'+esc(l.rel||l.type||'-')+'</td></tr>'});
+        h+='</tbody></table>'}
+      return h+'</div>';
+    }
+    if(kind==='subgraph'){
+      var ns=x.nodes||[],es=x.edges||[];
+      return '<div class="cardlet"><h3>相关知识 <span class="pill b">'+ns.length+' 条</span> <span class="pill g">'+es.length+' 条关联</span></h3>'+
+        (ns.length?'<div class="kv">'+ns.slice(0,30).map(function(v){return '<span>'+esc(v.label||v.id||v)+'</span>'}).join('')+'</div>':emptyBox('暂无相关知识'))+'</div>';
+    }
+    if(kind==='path'){
+      if(!x.found)return '<div class="notice warn">这两条知识之间没有查到直接联系</div>';
+      var ch=x.chain||[],hp=x.hops||[];
+      return '<div class="cardlet"><h3>两者联系</h3><div class="kv">'+
+        ch.map(function(v){return '<span>'+esc(v.label||v.id||v)+'</span>'}).join('<span>→</span>')+'</div>'+
+        (hp.length?'<div class="kv" style="margin-top:8px">'+hp.map(function(v){return '<span>'+esc(v.rel||'-')+'</span>'}).join('')+'</div>':'')+'</div>';
+    }
+    var rl=x.relations||{};
+    return '<div class="grid">'+
+      '<div class="card stat"><div class="k">知识条目</div><div class="v">'+esc(x.nodes)+'</div></div>'+
+      '<div class="card stat"><div class="k">关联总数</div><div class="v">'+esc(x.edges)+'</div></div></div>'+
+      '<div class="cardlet"><h3>关联类型</h3><div class="kv">'+Object.keys(rl).map(function(k){return '<span>'+esc(k)+' '+rl[k]+'</span>'}).join('')+'</div></div>';
+  });
+}
+function doWiki(){  /* 知识条目列表 */
+  run(document.querySelector('#tab-wiki .btn.primary'),'wRes','/wiki',{},function(d){
+    var items=d.items||[];
+    var h='<div class="cardlet"><h3>条目列表 <span class="pill b">'+items.length+' 条</span></h3>';
+    if(!items.length)h+=emptyBox('暂无条目');
+    else{h+='<table><thead><tr><th>编号</th><th>标题</th><th>状态</th></tr></thead><tbody>';
+      items.forEach(function(v){h+='<tr><td>'+esc(v.id||v.node_id)+'</td><td>'+esc(v.title)+'</td><td><span class="pill '+(v.status==='published'?'g':'o')+'">'+(v.status==='published'?'已发布':'草稿')+'</span></td></tr>'});
+      h+='</tbody></table>'}
+    return h+'</div>';
+  });
+}
+function doWikiOne(){  /* 单条知识条目 */
+  var n=document.getElementById('wNode').value.trim();
+  if(!n){document.getElementById('wRes').innerHTML='<div class="notice warn">请先填写知识编号</div>';return}
+  run(document.querySelector('#tab-wiki .btn.ghost'),'wRes','/wiki/'+encodeURIComponent(n),{},function(d){
+    var refs=d.refs||[];
+    return '<div class="cardlet"><h3>'+esc(d.title||d.id)+' <span class="pill '+(d.status==='published'?'g':'o')+'">'+(d.status==='published'?'已发布':'草稿')+'</span></h3>'+
+      '<div>'+esc(d.text)+'</div>'+(refs.length?'<div class="kv">'+refs.map(function(x){return '<span>依据 '+esc(x)+'</span>'}).join('')+'</div>':'')+'</div>';
+  });
+}
+function doAdmin(kind){  /* 管理员：岗位权限 / 办理留痕 */
+  run(document.activeElement,'aRes',kind==='roles'?'/admin/roles':'/admin/audit',{},function(d){
+    if(kind==='roles'){
+      var rt=d.role_tier||{},rd=d.role_descriptions||{};
+      return '<div class="cardlet"><h3>岗位与权限层级</h3><table><thead><tr><th>岗位</th><th>层级</th><th>职责</th></tr></thead><tbody>'+
+        Object.keys(rt).map(function(k){return '<tr><td>'+esc(ROLES[k]||k)+'</td><td><span class="pill b">'+esc(rt[k])+'</span></td><td>'+esc(rd[k]||'-')+'</td></tr>'}).join('')+
+        '</tbody></table></div>';
+    }
+    var items=d.items||[];
+    if(!items.length)return emptyBox('暂无办理留痕');
+    return '<div class="cardlet"><h3>最近办理留痕 <span class="pill b">'+items.length+' 条</span></h3><table><thead><tr><th>时间</th><th>事项</th><th>经办岗位</th><th>业务编号</th></tr></thead><tbody>'+
+      items.slice(0,30).map(function(v){return '<tr><td>'+esc(new Date(v.ts*1000).toLocaleString('zh-CN'))+'</td><td>'+esc(v.action||'-')+'</td><td>'+esc(ROLES[v.role]||v.role||'-')+'</td><td>'+esc(v.business_id||'-')+'</td></tr>'}).join('')+
+      '</tbody></table></div>';
+  });
+}
+function doReplay(){  /* 管理员：回看某业务的办理过程 */
+  var b=document.getElementById('aBiz').value.trim();
+  if(!b){document.getElementById('aRes').innerHTML='<div class="notice warn">请先填写业务编号</div>';return}
+  run(document.getElementById('replayBtn'),'aRes','/audit/replay?business_id='+encodeURIComponent(b),{},function(d){
+    var ch=d.chain||[];
+    if(!ch.length)return emptyBox('该业务编号暂无办理记录');
+    return '<div class="cardlet"><h3>办理过程 <span class="pill b">'+ch.length+' 个环节</span></h3>'+
+      ch.map(function(v,i){return '<div class="step"><i>'+(i+1)+'</i><div>'+esc(new Date(v.ts*1000).toLocaleString('zh-CN'))+' · '+esc(ROLES[v.role]||v.role||'')+' · '+esc(v.action||'办理')+'</div></div>'}).join('')+'</div>';
+  });
+}
+
+initRole();
+</script>
+</body>
+</html>
